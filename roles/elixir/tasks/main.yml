@@ -1,0 +1,62 @@
+---
+
+- name: fetch and untar OTP
+  unarchive:
+    src: http://erlang.org/download/otp_src_20.2.tar.gz
+    dest: /opt
+    remote_src: yes
+
+- name: install dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - make
+    - gcc
+    - m4
+    - ncurses-devel
+    - sed
+    - unixODBC-devel
+    - wxBase
+
+- name: configure OTP installation
+  shell: "cd /opt/otp_src_20.2 && ./configure"
+
+- name: build OTP
+  make:
+    chdir: /opt/otp_src_20.2
+
+- name: symlink the OTP binaries
+  file:
+    src: "/opt/otp_src_20.2/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  with_items:
+    - cerl
+    - ct_run
+    - dialyzer
+    - erl
+    - erlc
+    - escript
+    - typer
+
+- name: create elixir directory
+  file: path=/opt/elixir state=directory
+  become: true
+
+- name: fetch and unpack elixir release
+  unarchive:
+    src: "https://github.com/elixir-lang/elixir/releases/download/v1.6.3/Precompiled.zip"
+    dest: /opt/elixir
+    remote_src: yes
+
+- name: symlink the elixir binary
+  file:
+    src: "/opt/elixir/bin/{{ item.path }}"
+    dest: "/usr/local/bin/{{ item.dest }}"
+    state: link
+  with_items:
+    - { path: 'elixir', dest: 'elixir' }
+    - { path: 'elixirc', dest: 'elixirc' }
+    - { path: 'iex', dest: 'iex' }
+    - { path: 'mix', dest: 'mix' }

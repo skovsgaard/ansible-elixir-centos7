@@ -1,0 +1,16 @@
+---
+
+- name: nuke the symlinks
+  file:
+    state: absent
+    path: "/usr/local/bin/{{ item }}"
+  with_items:
+    - elixir
+    - elixirc
+    - iex
+    - mix
+
+- name: nuke the elixir dir in /opt
+  file:
+    state: absent
+    path: "/opt/elixir"

@@ -1,0 +1,9 @@
+---
+
+- hosts: elixir
+  roles:
+    - elixir
+
+- hosts: removeelixir
+  roles:
+    - elixir-remove
