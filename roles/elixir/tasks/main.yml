@@ -52,11 +52,11 @@
 
 - name: symlink the elixir binary
   file:
-    src: "/opt/elixir/bin/{{ item.path }}"
-    dest: "/usr/local/bin/{{ item.dest }}"
+    src: "/opt/elixir/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
     state: link
   with_items:
-    - { path: 'elixir', dest: 'elixir' }
-    - { path: 'elixirc', dest: 'elixirc' }
-    - { path: 'iex', dest: 'iex' }
-    - { path: 'mix', dest: 'mix' }
+    -  elixir
+    -  elixirc
+    -  iex
+    -  mix
