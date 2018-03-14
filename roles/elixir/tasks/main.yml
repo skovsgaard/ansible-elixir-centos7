@@ -26,19 +26,10 @@
   make:
     chdir: /opt/otp_src_20.2
 
-- name: symlink the OTP binaries
-  file:
-    src: "/opt/otp_src_20.2/bin/{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
-    state: link
-  with_items:
-    - cerl
-    - ct_run
-    - dialyzer
-    - erl
-    - erlc
-    - escript
-    - typer
+- name: install OTP
+  make:
+    chdir: /opt/otp_src_20.2
+    target: install
 
 - name: create elixir directory
   file: path=/opt/elixir state=directory
