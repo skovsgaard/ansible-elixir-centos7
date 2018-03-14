@@ -2,7 +2,7 @@
 
 - name: fetch and untar OTP
   unarchive:
-    src: http://erlang.org/download/otp_src_20.2.tar.gz
+    src: http://erlang.org/download/otp_src_20.3.tar.gz
     dest: /opt
     remote_src: yes
 
@@ -20,15 +20,15 @@
     - wxBase
 
 - name: configure OTP installation
-  shell: "cd /opt/otp_src_20.2 && ./configure"
+  shell: "cd /opt/otp_src_20.3 && ./configure"
 
 - name: build OTP
   make:
-    chdir: /opt/otp_src_20.2
+    chdir: /opt/otp_src_20.3
 
 - name: install OTP
   make:
-    chdir: /opt/otp_src_20.2
+    chdir: /opt/otp_src_20.3
     target: install
 
 - name: create elixir directory
